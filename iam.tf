@@ -7,6 +7,12 @@ resource "aws_iam_user" "admin" {
   }
 }
 
+
+resource "aws_iam_user_login_profile" "admin" {
+  user    = aws_iam_user.admin.name
+  pgp_key = file(var.gpg_key_filename)
+}
+
 resource "aws_iam_user_policy_attachment" "admin-access" {
   user       = aws_iam_user.admin.name
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
