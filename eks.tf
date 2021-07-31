@@ -44,6 +44,7 @@ resource "aws_eks_node_group" "us-west-2a" {
 
   tags = {
     Name = "rearc-us-west-2a"
+    "kubernetes.io/cluster/${aws_eks_cluster.default.name}" = "owned"
   }
 
   timeouts {
