@@ -19,9 +19,6 @@ resource "aws_route53_record" "hamdance" {
 
 resource "aws_route53_record" "hamdance-validation" {
   zone_id = aws_route53_zone.hamdance.zone_id
-  depends_on = [
-    aws_route53_zone.hamdance
-  ]
   name = "_c2a6a2e30813cb62ea0625f1c81fa02f.hamdance.net."
   type = "CNAME"
   ttl = 5
