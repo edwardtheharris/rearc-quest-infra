@@ -163,3 +163,9 @@ resource "aws_lb_listener" "rearc" {
     target_group_arn = aws_lb_target_group.rearc.arn
   }
 }
+
+resource "aws_lb_target_group_attachment" "rearc" {
+  target_group_arn = aws_lb_target_group.rearc.arn
+  target_id        = aws_instance.rearc.id
+  port             = 80
+}
