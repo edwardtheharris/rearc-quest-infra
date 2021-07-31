@@ -1,10 +1,4 @@
 resource "aws_ecs_cluster" "default" {
-  depends_on = [
-    aws_instance.ecs-2a,
-    aws_instance.ecs-2b,
-    aws_instance.ecs-2c,
-    aws_instance.ecs-2d
-  ]
   name = "default"
 }
 
@@ -21,10 +15,11 @@ resource "aws_ecs_task_definition" "quest" {
   container_definitions = jsonencode([
     {
       name      = "quest"
-      image     = data.aws_ecr_image.rearc-quest.id
-      cpu       = 10
-      memory    = 512
+      image     = "629354604262.dkr.ecr.us-west-2.amazonaws.com/rearc/quest:latest"
+      cpu       = 100
+      memory    = 128
       essential = true
+      environment = var.secret_word
       portMappings = [
         {
           containerPort = 3000
