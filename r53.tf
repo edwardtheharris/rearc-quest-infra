@@ -16,3 +16,16 @@ resource "aws_route53_record" "hamdance" {
     evaluate_target_health = true
   }
 }
+
+resource "aws_acm_certificate" "hamdance" {
+  domain_name       = "hamdance.net"
+  validation_method = "DNS"
+
+  tags = {
+    Environment = "rearc"
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
