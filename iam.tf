@@ -1,4 +1,4 @@
-resource "aws_iam_user" "xander" {
+resource "aws_iam_user" "admin" {
   name = "xander"
   path = "/admins/"
 
@@ -8,17 +8,27 @@ resource "aws_iam_user" "xander" {
 }
 
 resource "aws_iam_user_policy_attachment" "admin-access" {
-  user       = aws_iam_user.xander.name
+  user       = aws_iam_user.admin.name
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
+  depends_on = [
+    aws_iam_user.admin
+  ]
 }
 
 resource "aws_iam_user_ssh_key" "user" {
-  username   = aws_iam_user.xander.name
+  username   = aws_iam_user.admin.name
   encoding   = "SSH"
   public_key = file(var.public_key_path)
+  depends_on = [
+    aws_iam_user.admin
+  ]
 }
 
-resource "aws_iam_access_key" "xander" {
+resource "aws_iam_access_key" "admin" {
   pgp_key = file(var.gpg_key_filename)
-  user = aws_iam_user.xander.name
+  user = aws_iam_user.admin.name
+  depends_on = [
+    aws_iam_user.admin,
+    aws_iam_user_policy_attachment.admin-access
+  ]
 }

@@ -44,10 +44,10 @@ export TF_VAR_aws_profile=root
 
 terraform init
 terraform plan
-terraform apply
+terraform apply -target aws_iam_access_key.admin
 ```
 
-Now we've got a key and which we can decode with gpg then use to configure the default aws profile. Finally, we unset the environment variable that tells terraform to use the root user instead of our IAM user.
+Now we've got a key id and secret key. We can decode the secret key with gpg then use it to configure the default aws profile. Finally, we unset the environment variable that tells terraform to use the root user instead of our IAM user.
 
 ```bash
 terraform output -raw secret_access_key | base64 -D > /tmp/secret.gpg
@@ -55,3 +55,8 @@ gpg -d /tmp/secret.gpg
 aws configure
 unset TF_VAR_aws_profile
 ```
+
+## Build an image
+
+With our non-root user, we can start to deploy the service.
+
