@@ -24,6 +24,7 @@ data "aws_subnet" "us-west-2d" {
 
 resource "aws_subnet" "us-west-2a" {
   cidr_block = "172.31.16.0/20"
+  map_public_ip_on_launch = true
   tags = {
     Name = "us-west-2a"
     "kubernetes/cluster/default" = "shared"
@@ -33,6 +34,7 @@ resource "aws_subnet" "us-west-2a" {
 
 resource "aws_subnet" "us-west-2b" {
   cidr_block = "172.31.32.0/20"
+  map_public_ip_on_launch = true
   tags = {
     Name = "us-west-2b"
     "kubernetes/cluster/default" = "shared"
@@ -42,6 +44,7 @@ resource "aws_subnet" "us-west-2b" {
 
 resource "aws_subnet" "us-west-2c" {
   cidr_block = "172.31.0.0/20"
+  map_public_ip_on_launch = true
   tags = {
     Name = "us-west-2c"
     "kubernetes/cluster/default" = "shared"
@@ -51,6 +54,7 @@ resource "aws_subnet" "us-west-2c" {
 
 resource "aws_subnet" "us-west-2d" {
   cidr_block = "172.31.48.0/20"
+  map_public_ip_on_launch = true
   tags = {
     Name = "us-west-2d"
     "kubernetes/cluster/default" = "shared"
@@ -86,9 +90,4 @@ resource "aws_vpc_dhcp_options" "dns_resolver" {
 resource "aws_vpc_dhcp_options_association" "dns_resolver" {
   vpc_id          = data.aws_vpc.default.id
   dhcp_options_id = aws_vpc_dhcp_options.dns_resolver.id
-}
-
-resource "aws_vpc_endpoint" "sts" {
-  vpc_id       = data.aws_vpc.default.id
-  service_name = "com.amazonaws.us-west-2.sts"
 }
