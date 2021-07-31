@@ -48,6 +48,12 @@ resource "aws_eks_node_group" "us-west-2a" {
     Name = "rearc-us-west-2a"
   }
 
+  timeouts {
+    create = "15m"
+    delete = "15m"
+    update = "15m"
+  }
+
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
   # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.
   depends_on = [
@@ -76,6 +82,12 @@ resource "aws_eks_node_group" "us-west-2b" {
 
   tags = {
     Name = "rearc-us-west-2b"
+  }
+
+  timeouts {
+    create = "15m"
+    delete = "15m"
+    update = "15m"
   }
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
@@ -108,6 +120,12 @@ resource "aws_eks_node_group" "us-west-2c" {
     Name = "rearc-us-west-2c"
   }
 
+  timeouts {
+    create = "15m"
+    delete = "15m"
+    update = "15m"
+  }
+
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
   # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.
   depends_on = [
@@ -136,6 +154,12 @@ resource "aws_eks_node_group" "us-west-2d" {
 
   tags = {
     Name = "rearc-us-west-2d"
+  }
+
+  timeouts {
+    create = "15m"
+    delete = "15m"
+    update = "15m"
   }
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
