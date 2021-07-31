@@ -2,6 +2,7 @@ resource "aws_eks_cluster" "default" {
   name     = "default"
   role_arn = aws_iam_role.eks.arn
 
+  version = "1.21"
   vpc_config {
     public_access_cidrs = [
         var.eks_access_cidr
