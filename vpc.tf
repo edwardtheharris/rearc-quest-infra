@@ -2,6 +2,10 @@ data "aws_vpc" "default" {
   id = "vpc-af3030d7"
 }
 
+data "aws_route_table" "default" {
+  id = "rtb-4de50837"
+}
+
 data "aws_subnet" "us-west-2a" {
   id = "subnet-54970a2c"
 }
@@ -16,6 +20,26 @@ data "aws_subnet" "us-west-2c" {
 
 data "aws_subnet" "us-west-2d" {
   id = "subnet-d316f2f9"
+}
+
+resource "aws_route_table_association" "us-west-2a" {
+  subnet_id      = data.aws_subnet.us-west-2a.id
+  route_table_id = data.aws_route_table.default.id
+}
+
+resource "aws_route_table_association" "us-west-2b" {
+  subnet_id      = data.aws_subnet.us-west-2b.id
+  route_table_id = data.aws_route_table.default.id
+}
+
+resource "aws_route_table_association" "us-west-2c" {
+  subnet_id      = data.aws_subnet.us-west-2c.id
+  route_table_id = data.aws_route_table.default.id
+}
+
+resource "aws_route_table_association" "us-west-2d" {
+  subnet_id      = data.aws_subnet.us-west-2d.id
+  route_table_id = data.aws_route_table.default.id
 }
 
 resource "aws_vpc_dhcp_options" "dns_resolver" {
