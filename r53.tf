@@ -1,6 +1,6 @@
-resource "aws_route53_zone" "hamdance" {
-  name = "hamdance.net"
-}
+# resource "aws_route53_zone" "hamdance" {
+#   name = "hamdance.net"
+# }
 
 resource "aws_route53_record" "hamdance" {
   zone_id = aws_route53_zone.hamdance.zone_id
