@@ -7,7 +7,7 @@ resource "aws_eks_cluster" "default" {
         var.eks_access_cidr
     ]
     security_group_ids = [
-        aws_security_group.allow-ec2
+        aws_security_group.allow-ec2.id
     ]
     subnet_ids = [
       data.aws_subnet.us-west-2a.id,
