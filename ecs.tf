@@ -35,7 +35,7 @@ resource "aws_instance" "ecs-2b" {
   ]
   instance_type = "t3.micro"
   key_name      = aws_key_pair.rearc.key_name
-  subnet_id     = data.aws_subnet.us-west-2b
+  subnet_id     = data.aws_subnet.us-west-2bt
   tags = {
     Name = "Rearc Quest ecs us-west-2b"
   }
