@@ -3,12 +3,12 @@ resource "aws_ecs_cluster" "default" {
 }
 
 resource "aws_ecs_service" "rearc" {
-  name            = "rearc"
-  cluster         = aws_ecs_cluster.default.id
-  depends_on      = [aws_iam_role.ecsServiceRole]
-  desired_count   = 4
+  name                 = "rearc"
+  cluster              = aws_ecs_cluster.default.id
+  depends_on           = [aws_iam_role.ecsServiceRole]
+  desired_count        = 4
   force_new_deployment = true
-  task_definition = aws_ecs_task_definition.quest.arn
+  task_definition      = aws_ecs_task_definition.quest.arn
 }
 
 resource "aws_ecs_task_definition" "quest" {

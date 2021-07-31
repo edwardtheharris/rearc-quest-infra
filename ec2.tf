@@ -138,7 +138,7 @@ resource "aws_lb" "rearc" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.allow-ec2.id]
-  subnets            = [
+  subnets = [
     data.aws_subnet.us-west-2a.id,
     data.aws_subnet.us-west-2b.id,
     data.aws_subnet.us-west-2c.id,
