@@ -22,6 +22,42 @@ data "aws_subnet" "us-west-2d" {
   id = "subnet-d316f2f9"
 }
 
+resource "aws_subnet" "us-west-2a" {
+  cidr_block = "172.31.16.0/20"
+  tags = {
+    Name = "us-west-2a"
+    "kubernetes/cluster/default" = "shared"
+  }
+  vpc_id = data.aws_vpc.default.id
+}
+
+resource "aws_subnet" "us-west-2b" {
+  cidr_block = "172.31.32.0/20"
+  tags = {
+    Name = "us-west-2b"
+    "kubernetes/cluster/default" = "shared"
+  }
+  vpc_id = data.aws_vpc.default.id
+}
+
+resource "aws_subnet" "us-west-2c" {
+  cidr_block = "172.31.0.0/20"
+  tags = {
+    Name = "us-west-2c"
+    "kubernetes/cluster/default" = "shared"
+  }
+  vpc_id = data.aws_vpc.default.id
+}
+
+resource "aws_subnet" "us-west-2d" {
+  cidr_block = "172.31.48.0/20"
+  tags = {
+    Name = "us-west-2d"
+    "kubernetes/cluster/default" = "shared"
+  }
+  vpc_id = data.aws_vpc.default.id
+}
+
 resource "aws_route_table_association" "us-west-2a" {
   subnet_id      = data.aws_subnet.us-west-2a.id
   route_table_id = data.aws_route_table.default.id
@@ -50,4 +86,9 @@ resource "aws_vpc_dhcp_options" "dns_resolver" {
 resource "aws_vpc_dhcp_options_association" "dns_resolver" {
   vpc_id          = data.aws_vpc.default.id
   dhcp_options_id = aws_vpc_dhcp_options.dns_resolver.id
+}
+
+resource "aws_vpc_endpoint" "sts" {
+  vpc_id       = data.aws_vpc.default.id
+  service_name = "com.amazonaws.us-west-2.sts"
 }
