@@ -75,7 +75,7 @@ resource "aws_instance" "ecs-2a" {
     aws_key_pair.rearc,
     aws_security_group.allow-ec2
   ]
-  iam_instance_profile = aws_iam_instance_profile.ecsInstanceProfile.arn
+  iam_instance_profile = aws_iam_instance_profile.ecsInstanceProfile.name
   instance_type        = "t3.micro"
   key_name             = aws_key_pair.rearc.key_name
   subnet_id            = data.aws_subnet.us-west-2a.id
@@ -91,7 +91,7 @@ resource "aws_instance" "ecs-2b" {
     aws_key_pair.rearc,
     aws_security_group.allow-ec2
   ]
-  iam_instance_profile = aws_iam_instance_profile.ecsInstanceProfile.arn
+  iam_instance_profile = aws_iam_instance_profile.ecsInstanceProfile.name
   instance_type        = "t3.micro"
   key_name             = aws_key_pair.rearc.key_name
   subnet_id            = data.aws_subnet.us-west-2b.id
@@ -107,7 +107,7 @@ resource "aws_instance" "ecs-2c" {
     aws_key_pair.rearc,
     aws_security_group.allow-ec2
   ]
-  iam_instance_profile = aws_iam_instance_profile.ecsInstanceProfile.arn
+  iam_instance_profile = aws_iam_instance_profile.ecsInstanceProfile.name
   instance_type        = "t3.micro"
   key_name             = aws_key_pair.rearc.key_name
   subnet_id            = data.aws_subnet.us-west-2c.id
@@ -123,7 +123,7 @@ resource "aws_instance" "ecs-2d" {
     aws_key_pair.rearc,
     aws_security_group.allow-ec2
   ]
-  iam_instance_profile = aws_iam_instance_profile.ecsInstanceProfile.arn
+  iam_instance_profile = aws_iam_instance_profile.ecsInstanceProfile.name
   instance_type        = "t3.micro"
   key_name             = aws_key_pair.rearc.key_name
   subnet_id            = data.aws_subnet.us-west-2d.id
