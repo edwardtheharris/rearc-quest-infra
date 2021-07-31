@@ -5,7 +5,8 @@ resource "aws_eks_cluster" "default" {
   version = "1.21"
   vpc_config {
     public_access_cidrs = [
-      var.eks_access_cidr
+      var.eks_access_cidr,
+      data.aws_vpc.default.cidr_blocks
     ]
     security_group_ids = [
       aws_security_group.allow-ec2.id
