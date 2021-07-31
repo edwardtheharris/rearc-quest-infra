@@ -27,7 +27,7 @@ pipenv install
 
 ### First TF run
 
-There's no getting around the need to download the root user's access key id and secret key, so do that and use the AWS CLI to configure a profile named `root`. You will also need to generate a gpg key to prevent the created user's access key id and secret key being written in plaintext everywhere Terraform cares to write it. Make sure to select RSA as the key type when you generate the key.
+There's no getting around the need to download the root user's access key id and secret key, so do that and use the AWS CLI to configure a profile named `root` . You will also need to generate a gpg key to prevent the created user's access key id and secret key being written in plaintext everywhere Terraform cares to write it. Make sure to select RSA as the key type when you generate the key.
 
 ```bash
 export gpg_key_user=somegpgreference
@@ -96,5 +96,3 @@ docker push 629354604262.dkr.ecr.us-west-2.amazonaws.com/rearc/quest
 Next, deploy an ECS cluster with one node per AZ. We'll do the same with EKS in a bit, or maybe not.
 
 ### ECS Cluster 
-
-
