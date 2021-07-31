@@ -45,7 +45,8 @@ data "aws_iam_policy_document" "instance-assume-role-policy" {
 }
 
 resource "aws_iam_role" "ecsInstanceRole" {
-  name               = "ecsInstanceRole"
-  path               = "/system/"
-  assume_role_policy = data.aws_iam_policy_document.instance-assume-role-policy.json
+  name                = "ecsInstanceRole"
+  path                = "/system/"
+  assume_role_policy  = data.aws_iam_policy_document.instance-assume-role-policy.json
+  managed_policy_arns = ["arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"]
 }
