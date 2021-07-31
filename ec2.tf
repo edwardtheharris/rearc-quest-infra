@@ -10,7 +10,7 @@ data "aws_ami" "amazon" {
 
 resource "aws_key_pair" "rearc" {
   key_name   = "rearc"
-  public_key = file("~/.ssh/id_rsa.pub")
+  public_key = file("xandertheharris.pub")
 }
 
 resource "aws_security_group" "allow-ec2" {
