@@ -11,7 +11,7 @@ variable "public_key_path" {
 }
 
 variable "secret_word" {
-  default = "wat"
+  default = "PhoenixProject"
 }
 
 variable "shared_credentials_file" {
