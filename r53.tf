@@ -67,13 +67,16 @@ resource "aws_route53_record" "hamdance-validation-com" {
   ttl = 5
   records = ["_8c42f22b5a89682447755db8f3879f3c.qqqfmgwtgn.acm-validations.aws."]
   depends_on = [
-    aws_acm_certificate.hamdance-com
-    aws_route53_zone.hamdance-com.zone_id
+    aws_acm_certificate.hamdance-com,
+    aws_route53_zone.hamdance-com
   ]
 }
 
 resource "aws_acm_certificate" "hamdance-com" {
   domain_name       = "hamdance.com"
+  depends_on = [
+    aws_route53_zone.hamdance-com
+  ]
   validation_method = "DNS"
 
   tags = {
