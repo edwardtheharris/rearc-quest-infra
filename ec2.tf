@@ -1,5 +1,6 @@
 data "aws_ami" "amazon" {
   most_recent = true
+  owners = "766535289950"
 
   filter {
     name   = "name"
