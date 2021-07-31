@@ -19,17 +19,24 @@ resource "aws_route53_record" "hamdance" {
 
 resource "aws_route53_record" "hamdance-validation" {
   zone_id = aws_route53_zone.hamdance.zone_id
+  depends_on = [
+    aws_route53_zone.hamdance
+  ]
   name = "_c2a6a2e30813cb62ea0625f1c81fa02f.hamdance.net."
   type = "CNAME"
   ttl = 5
   records = ["_af09e6bbccc609411baa8b7b897a7c63.qqqfmgwtgn.acm-validations.aws."]
   depends_on = [
-    aws_acm_certificate.hamdance
+    aws_acm_certificate.hamdance,
+    aws_route53_zone.hamdance
   ]
 }
 
 resource "aws_acm_certificate" "hamdance" {
   domain_name       = "hamdance.net"
+  depends_on = [
+    aws_route53_zone.hamdance
+  ]
   validation_method = "DNS"
 
   tags = {
@@ -46,11 +53,11 @@ resource "aws_acm_certificate" "hamdance" {
 # }
 
 resource "aws_route53_record" "hamdance-com" {
-  zone_id = aws_route53_zone.hamdance.zone_id
+  zone_id = aws_route53_zone.hamdance-com.zone_id
   name    = "hamdance.com"
   type    = "A"
   depends_on = [
-    aws_route53_zone.hamdance
+    aws_route53_zone.hamdance-com
   ]
 
   alias {
