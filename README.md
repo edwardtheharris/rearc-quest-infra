@@ -37,12 +37,10 @@ gpg --full-generate-key
 gpg --export ${gpg_key_user} | base64 > ${gpg_key_user}.gpg
 ```
 
-Then set the variables required to set up the IAM user we'll actually be using to do the deployment, initialize the repository and apply the changes.
+Next configure the AWS profile to the root user, initialize the repository and apply the changes.
 
 ```bash
 export TF_VAR_aws_profile=root
-export TF_VAR_public_key_path=$HOME/.ssh/id_rsa.pub
-export TF_VAR_shared_credentials_file=$HOME/.aws/credentials
 
 terraform init
 terraform plan

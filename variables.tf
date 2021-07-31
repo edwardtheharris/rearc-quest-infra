@@ -6,6 +6,10 @@ variable "gpg_key_filename" {
     default = "xandertheharris.gpg"
 }
 
-variable "public_key_path" {}
+variable "public_key_path" {
+    default = "~/.ssh/id_rsa.pub"
+}
 
-variable "shared_credentials_file" {}
+variable "shared_credentials_file" {
+    default = "~/.aws/credentials"
+}
