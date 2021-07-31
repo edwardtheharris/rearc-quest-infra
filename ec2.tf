@@ -132,3 +132,23 @@ resource "aws_instance" "ecs-2d" {
   }
   vpc_security_group_ids = [aws_security_group.allow-ec2.id]
 }
+
+resource "aws_lb" "rearc" {
+  name               = "rearc"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.allow-ec2.id]
+  subnets            = [
+    data.aws_subnet.us-west-2a.id,
+    data.aws_subnet.us-west-2b.id,
+    data.aws_subnet.us-west-2c.id,
+    data.aws_subnet.us-west-2d.id
+  ]
+}
+
+resource "aws_lb_target_group" "rearc" {
+  name     = "rearc"
+  port     = 3000
+  protocol = "HTTP"
+  vpc_id   = data.aws_vpc.default.id
+}
