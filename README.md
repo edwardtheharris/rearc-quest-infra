@@ -34,7 +34,7 @@ export gpg_key_user=somegpgreference
 
 aws configure --profile root
 gpg --generate-key
-gpg --export -a ${gpg_key_user} | base64 > ${gpg_key_user}.gpg
+gpg --export ${gpg_key_user} | base64 > ${gpg_key_user}.gpg
 ```
 
 Then set the variables required to set up the IAM user we'll actually be using to do the deployment, initialize the repository and apply the changes.
