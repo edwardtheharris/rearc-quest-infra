@@ -134,7 +134,7 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
 }
 
 resource "aws_iam_role" "eksNodeGroup" {
-  name = "eksNodeGroup"
+  name               = "eksNodeGroup"
   assume_role_policy = data.aws_iam_policy_document.instance-assume-role-policy.json
 }
 
