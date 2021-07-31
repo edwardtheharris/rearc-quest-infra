@@ -32,6 +32,11 @@ resource "aws_eks_node_group" "us-west-2a" {
   node_role_arn   = aws_iam_role.eksNodeGroup.arn
   subnet_ids      = [data.aws_subnet.us-west-2a.id]
 
+  remote_access {
+    ec2_ssh_key = aws_key_pair.rearc
+    source_security_group_ids = [aws_security_group.allow-ec2.id]
+  }
+
   scaling_config {
     desired_size = 1
     max_size     = 1
@@ -56,6 +61,11 @@ resource "aws_eks_node_group" "us-west-2b" {
   node_group_name = "us-west-2b"
   node_role_arn   = aws_iam_role.eksNodeGroup.arn
   subnet_ids      = [data.aws_subnet.us-west-2b.id]
+
+  remote_access {
+    ec2_ssh_key = aws_key_pair.rearc
+    source_security_group_ids = [aws_security_group.allow-ec2.id]
+  }
 
   scaling_config {
     desired_size = 1
@@ -82,6 +92,11 @@ resource "aws_eks_node_group" "us-west-2c" {
   node_role_arn   = aws_iam_role.eksNodeGroup.arn
   subnet_ids      = [data.aws_subnet.us-west-2c.id]
 
+  remote_access {
+    ec2_ssh_key = aws_key_pair.rearc
+    source_security_group_ids = [aws_security_group.allow-ec2.id]
+  }
+
   scaling_config {
     desired_size = 1
     max_size     = 1
@@ -106,6 +121,11 @@ resource "aws_eks_node_group" "us-west-2d" {
   node_group_name = "us-west-2d"
   node_role_arn   = aws_iam_role.eksNodeGroup.arn
   subnet_ids      = [data.aws_subnet.us-west-2d.id]
+
+  remote_access {
+    ec2_ssh_key = aws_key_pair.rearc
+    source_security_group_ids = [aws_security_group.allow-ec2.id]
+  }
 
   scaling_config {
     desired_size = 1
