@@ -1,6 +1,6 @@
 resource "aws_eks_cluster" "default" {
   name     = "default"
-  role_arn = aws_iam_role.default.arn
+  role_arn = aws_iam_role.eks.arn
 
   vpc_config {
     subnet_ids = [aws_subnet.default1.id, aws_subnet.default2.id]
