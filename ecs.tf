@@ -13,7 +13,6 @@ resource "aws_ecs_service" "rearc" {
   cluster         = aws_ecs_cluster.default.id
   task_definition = aws_ecs_task_definition.quest.arn
   desired_count   = 4
-  iam_role        = aws_iam_role.ecsServiceRole.arn
   depends_on      = [aws_iam_role.ecsServiceRole]
 }
 
