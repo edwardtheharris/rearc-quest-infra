@@ -27,13 +27,13 @@ pipenv install
 
 ### First TF run
 
-There's no getting around the need to download the root user's access key id and secret key, so do that and use the AWS CLI to configure a profile named `root`. You will also need to generate a gpg key to prevent the created user's access key id and secret key being written in plaintext everywhere Terraform cares to write it.
+There's no getting around the need to download the root user's access key id and secret key, so do that and use the AWS CLI to configure a profile named `root`. You will also need to generate a gpg key to prevent the created user's access key id and secret key being written in plaintext everywhere Terraform cares to write it. Make sure to select RSA as the key type when you generate the key.
 
 ```bash
 export gpg_key_user=somegpgreference
 
 aws configure --profile root
-gpg --generate-key
+gpg --full-generate-key
 gpg --export ${gpg_key_user} | base64 > ${gpg_key_user}.gpg
 ```
 
