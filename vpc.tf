@@ -51,3 +51,8 @@ resource "aws_vpc_dhcp_options_association" "dns_resolver" {
   vpc_id          = data.aws_vpc.default.id
   dhcp_options_id = aws_vpc_dhcp_options.dns_resolver.id
 }
+
+resource "aws_vpc_endpoint" "sts" {
+  vpc_id       = data.aws_vpc.default.id
+  service_name = "com.amazonaws.us-west-2.sts"
+}
