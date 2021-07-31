@@ -26,7 +26,7 @@ resource "aws_iam_user_ssh_key" "user" {
 
 resource "aws_iam_access_key" "admin" {
   pgp_key = file(var.gpg_key_filename)
-  user = aws_iam_user.admin.name
+  user    = aws_iam_user.admin.name
   depends_on = [
     aws_iam_user.admin,
     aws_iam_user_policy_attachment.admin-access

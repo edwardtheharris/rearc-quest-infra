@@ -3,13 +3,13 @@ variable "aws_profile" {
 }
 
 variable "gpg_key_filename" {
-    default = "xandertheharris.gpg"
+  default = "xandertheharris.gpg"
 }
 
 variable "public_key_path" {
-    default = "~/.ssh/id_rsa.pub"
+  default = "~/.ssh/id_rsa.pub"
 }
 
 variable "shared_credentials_file" {
-    default = "~/.aws/credentials"
+  default = "~/.aws/credentials"
 }
