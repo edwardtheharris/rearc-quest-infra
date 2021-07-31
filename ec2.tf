@@ -164,25 +164,25 @@ resource "aws_lb_listener" "rearc" {
   }
 }
 
-resource "aws_lb_target_group_attachment" "rearc" {
+resource "aws_lb_target_group_attachment" "ecs-2a" {
   target_group_arn = aws_lb_target_group.rearc.arn
   target_id        = aws_instance.ecs-2a.id
   port             = 3000
 }
 
-resource "aws_lb_target_group_attachment" "rearc" {
+resource "aws_lb_target_group_attachment" "ecs-2b" {
   target_group_arn = aws_lb_target_group.rearc.arn
   target_id        = aws_instance.ecs-2b.id
   port             = 3000
 }
 
-resource "aws_lb_target_group_attachment" "rearc" {
+resource "aws_lb_target_group_attachment" "ecs-2c" {
   target_group_arn = aws_lb_target_group.rearc.arn
   target_id        = aws_instance.ecs-2c.id
   port             = 3000
 }
 
-resource "aws_lb_target_group_attachment" "rearc" {
+resource "aws_lb_target_group_attachment" "ecs-2d" {
   target_group_arn = aws_lb_target_group.rearc.arn
   target_id        = aws_instance.ecs-2d.id
   port             = 3000
