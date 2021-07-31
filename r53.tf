@@ -71,7 +71,7 @@ resource "aws_route53_record" "hamdance-validation-com" {
   ]
 }
 
-resource "aws_acm_certificate" "hamdance" {
+resource "aws_acm_certificate" "hamdance-com" {
   domain_name       = "hamdance.com"
   validation_method = "DNS"
 
