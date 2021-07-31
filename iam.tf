@@ -39,16 +39,28 @@ data "aws_iam_policy_document" "instance-assume-role-policy" {
 
     principals {
       type        = "Service"
-      identifiers = ["ec2.amazonaws.com"]
+      identifiers = [
+        "ec2.amazonaws.com",
+        "ecs.amazonaws.com"
+      ]
     }
   }
 }
 
 resource "aws_iam_role" "ecsInstanceRole" {
-  name                = "ecsInstanceRole"
-  path                = "/system/"
-  assume_role_policy  = data.aws_iam_policy_document.instance-assume-role-policy.json
-  managed_policy_arns = ["arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"]
+  name               = "ecsInstanceRole"
+  path               = "/system/"
+  assume_role_policy = data.aws_iam_policy_document.instance-assume-role-policy.json
+}
+
+resource "aws_iam_role_policy_attachment" "ecs-full" {
+  role       = aws_iam_role.ecsInstanceRole.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonECS_FullAccess"
+}
+
+resource "aws_iam_role_policy_attachment" "container-service" {
+  role       = aws_iam_role.ecsInstanceRole.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
 }
 
 resource "aws_iam_instance_profile" "ecsInstanceProfile" {
@@ -60,5 +72,14 @@ resource "aws_iam_role" "ecsServiceRole" {
   name                = "ecsServiceRole"
   path                = "/system/"
   assume_role_policy  = data.aws_iam_policy_document.instance-assume-role-policy.json
-  managed_policy_arns = ["arn:aws:iam::aws:policy/AmazonECS_FullAccess"]
+}
+
+resource "aws_iam_role_policy_attachment" "ecs-full-service" {
+  role = aws_iam_role.ecsServiceRole.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonECS_FullAccess"
+}
+
+resource "aws_iam_role_policy_attachment" "ecs-task-exec" {   
+  role = aws_iam_role.ecsServiceRole.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
