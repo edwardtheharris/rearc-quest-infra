@@ -34,7 +34,7 @@ export gpg_key_user=somegpgreference
 
 aws configure --profile root
 gpg --generate-key
-gpg --export -o ${gpg_key_user}.gpg -a ${gpg_key_user}
+gpg --export -a ${gpg_key_user} |base64 --output ${gpg_key_user}.gpg
 ```
 
 Then set the variables required to set up the IAM user we'll actually be using to do the deployment, initialize the repository and apply the changes.
@@ -48,3 +48,5 @@ terraform init
 terraform plan
 terraform apply
 ```
+
+
