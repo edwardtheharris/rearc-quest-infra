@@ -47,9 +47,9 @@ resource "aws_eks_node_group" "us-west-2a" {
   }
 
   timeouts {
-    create = "15m"
-    delete = "15m"
-    update = "15m"
+    create = "10m"
+    delete = "10m"
+    update = "10m"
   }
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
@@ -82,9 +82,9 @@ resource "aws_eks_node_group" "us-west-2b" {
   }
 
   timeouts {
-    create = "15m"
-    delete = "15m"
-    update = "15m"
+    create = "10m"
+    delete = "10m"
+    update = "10m"
   }
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
@@ -117,9 +117,9 @@ resource "aws_eks_node_group" "us-west-2c" {
   }
 
   timeouts {
-    create = "15m"
-    delete = "15m"
-    update = "15m"
+    create = "10m"
+    delete = "10m"
+    update = "10m"
   }
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
@@ -152,9 +152,9 @@ resource "aws_eks_node_group" "us-west-2d" {
   }
 
   timeouts {
-    create = "15m"
-    delete = "15m"
-    update = "15m"
+    create = "10m"
+    delete = "10m"
+    update = "10m"
   }
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
