@@ -60,3 +60,20 @@ unset TF_VAR_aws_profile
 
 With our non-root user, we can start to deploy the service.
 
+### ECR
+
+Next deploy the ECR repository we'll use to store the application image.
+
+```bash
+terraform apply -target aws_ecr_repository.rearc-quest
+```
+
+When this apply is done, you can log in to the AWS console to retrieve the ECR login command. You need to run this to push the application image to ECR.
+
+### Docker build
+
+Run the image build command.
+
+```bash
+docker build -t 629354604262.dkr.ecr.us-west-2.amazonaws.com/rearc/quest -f docker/Dockerfile docker/
+```
