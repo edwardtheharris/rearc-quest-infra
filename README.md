@@ -98,3 +98,9 @@ Next, deploy an ECS cluster with one node per AZ. We'll do the same with EKS in 
 ### ECS Cluster
 
 Use default because it's easier.
+
+Easy enough.
+
+With TLS and everything.
+
+![hamdance.net](img/hamdance.net.png)
