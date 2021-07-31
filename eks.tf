@@ -3,6 +3,9 @@ resource "aws_eks_cluster" "default" {
   role_arn = aws_iam_role.eks.arn
 
   vpc_config {
+    public_access_cidrs = [
+        var.eks_access_cidr
+    ]
     security_group_ids = [
         aws_security_group.allow-ec2
     ]

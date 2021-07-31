@@ -6,6 +6,10 @@ variable "gpg_key_filename" {
   default = "xandertheharris.gpg"
 }
 
+variable "eks_access_cidr" {
+  default = "10.0.0.0/8"
+}
+
 variable "public_key_path" {
   default = "~/.ssh/id_rsa.pub"
 }
