@@ -49,4 +49,11 @@ terraform plan
 terraform apply
 ```
 
+Now we've got a key and which we can decode with gpg then use to configure the default aws profile. Finally, we unset the environment variable that tells terraform to use the root user instead of our IAM user.
 
+```bash
+terraform output -raw secret_access_key | base64 -D > /tmp/secret.gpg
+gpg -d /tmp/secret.gpg
+aws configure
+unset TF_VAR_aws_profile
+```
