@@ -34,7 +34,7 @@ resource "aws_eks_node_group" "us-west-2a" {
   subnet_ids      = [data.aws_subnet.us-west-2a.id]
 
   remote_access {
-    ec2_ssh_key = aws_key_pair.rearc.name
+    ec2_ssh_key = aws_key_pair.rearc.key_name
     source_security_group_ids = [aws_security_group.allow-ec2.id]
   }
 
@@ -64,7 +64,7 @@ resource "aws_eks_node_group" "us-west-2b" {
   subnet_ids      = [data.aws_subnet.us-west-2b.id]
 
   remote_access {
-    ec2_ssh_key = aws_key_pair.rearc.name
+    ec2_ssh_key = aws_key_pair.rearc.key_name
     source_security_group_ids = [aws_security_group.allow-ec2.id]
   }
 
@@ -94,7 +94,7 @@ resource "aws_eks_node_group" "us-west-2c" {
   subnet_ids      = [data.aws_subnet.us-west-2c.id]
 
   remote_access {
-    ec2_ssh_key = aws_key_pair.rearc.name
+    ec2_ssh_key = aws_key_pair.rearc.key_name
     source_security_group_ids = [aws_security_group.allow-ec2.id]
   }
 
@@ -124,7 +124,7 @@ resource "aws_eks_node_group" "us-west-2d" {
   subnet_ids      = [data.aws_subnet.us-west-2d.id]
 
   remote_access {
-    ec2_ssh_key = aws_key_pair.rearc.name
+    ec2_ssh_key = aws_key_pair.rearc.key_name
     source_security_group_ids = [aws_security_group.allow-ec2.id]
   }
 
