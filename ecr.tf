@@ -6,3 +6,8 @@ resource "aws_ecr_repository" "rearc-quest" {
     scan_on_push = true
   }
 }
+
+data "aws_ecr_image" "rearc-quest" {
+  repository_name = "rearc/quest"
+  image_tag       = "latest"
+}

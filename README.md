@@ -27,7 +27,7 @@ pipenv install
 
 ### First TF run
 
-There's no getting around the need to download the root user's access key id and secret key, so do that and use the AWS CLI to configure a profile named `root`. You will also need to generate a gpg key to prevent the created user's access key id and secret key being written in plaintext everywhere Terraform cares to write it. Make sure to select RSA as the key type when you generate the key.
+There's no getting around the need to download the root user's access key id and secret key, so do that and use the AWS CLI to configure a profile named `root` . You will also need to generate a gpg key to prevent the created user's access key id and secret key being written in plaintext everywhere Terraform cares to write it. Make sure to select RSA as the key type when you generate the key.
 
 ```bash
 export gpg_key_user=somegpgreference
@@ -56,24 +56,43 @@ aws configure
 unset TF_VAR_aws_profile
 ```
 
-## Build an image
+## Deploy an ec2 instance
 
-With our non-root user, we can start to deploy the service.
+The instance described in `ec2.tf` ought to do.
+
+```bash
+terraform apply -target aws_instance.rearc
+```
+
+When that's finished (don't forget to give the user data some time to run as well) you can log in to the AWS console to find the public IP, then hit the deployed in your brower at port 3000.
+
+## Build a Docker image
+
+First make a repository to store it in.
 
 ### ECR
 
-Next deploy the ECR repository we'll use to store the application image.
+ECR works well for this.
 
 ```bash
 terraform apply -target aws_ecr_repository.rearc-quest
 ```
 
-When this apply is done, you can log in to the AWS console to retrieve the ECR login command. You need to run this to push the application image to ECR.
+When this apply is done, you can log in to the AWS console to retrieve the ECR login command. You need to run this to push the application image to ECR. By now you'll have the secret word, which is [very clever](https://12factor.net/).
+
+```bash
+aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 629354604262.dkr.ecr.us-west-2.amazonaws.com
+```
 
 ### Docker build
 
-Run the image build command.
+Run the image build command. And push the image.
 
 ```bash
 docker build -t 629354604262.dkr.ecr.us-west-2.amazonaws.com/rearc/quest -f docker/Dockerfile docker/
+docker push 629354604262.dkr.ecr.us-west-2.amazonaws.com/rearc/quest
 ```
+
+Next, deploy an ECS cluster with one node per AZ. We'll do the same with EKS in a bit, or maybe not.
+
+### ECS Cluster
