@@ -86,9 +86,9 @@ aws ecr get-login-password --region us-west-2 | docker login --username AWS --pa
 
 ### Docker build
 
-Run the image build command.
+Run the image build command. And push the image.
 
 ```bash
 docker build -t 629354604262.dkr.ecr.us-west-2.amazonaws.com/rearc/quest -f docker/Dockerfile docker/
+docker push 629354604262.dkr.ecr.us-west-2.amazonaws.com/rearc/quest
 ```
-
