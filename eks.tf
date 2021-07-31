@@ -29,7 +29,7 @@ resource "aws_eks_cluster" "default" {
 resource "aws_eks_node_group" "us-west-2a" {
   cluster_name    = aws_eks_cluster.default.name
   node_group_name = "us-west-2a"
-  node_role_arn   = aws_iam_role.eksNodeGroup.arn
+  node_role_arn   = aws_iam_role.eksNodeRole.arn
   subnet_ids      = [data.aws_subnet.us-west-2a.id]
 
   remote_access {
@@ -64,7 +64,7 @@ resource "aws_eks_node_group" "us-west-2a" {
 resource "aws_eks_node_group" "us-west-2b" {
   cluster_name    = aws_eks_cluster.default.name
   node_group_name = "us-west-2b"
-  node_role_arn   = aws_iam_role.eksNodeGroup.arn
+  node_role_arn   = aws_iam_role.eksNodeRole.arn
   subnet_ids      = [data.aws_subnet.us-west-2b.id]
 
   remote_access {
@@ -99,7 +99,7 @@ resource "aws_eks_node_group" "us-west-2b" {
 resource "aws_eks_node_group" "us-west-2c" {
   cluster_name    = aws_eks_cluster.default.name
   node_group_name = "us-west-2c"
-  node_role_arn   = aws_iam_role.eksNodeGroup.arn
+  node_role_arn   = aws_iam_role.eksNodeRole.arn
   subnet_ids      = [data.aws_subnet.us-west-2c.id]
 
   remote_access {
@@ -134,7 +134,7 @@ resource "aws_eks_node_group" "us-west-2c" {
 resource "aws_eks_node_group" "us-west-2d" {
   cluster_name    = aws_eks_cluster.default.name
   node_group_name = "us-west-2d"
-  node_role_arn   = aws_iam_role.eksNodeGroup.arn
+  node_role_arn   = aws_iam_role.eksNodeRole.arn
   subnet_ids      = [data.aws_subnet.us-west-2d.id]
 
   remote_access {

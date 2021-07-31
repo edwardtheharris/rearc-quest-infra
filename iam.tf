@@ -133,24 +133,24 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly-ek
   role       = aws_iam_role.eks.name
 }
 
-resource "aws_iam_role" "eksNodeGroup" {
-  name               = "eksNodeGroup"
+resource "aws_iam_role" "eksNodeRole" {
+  name               = "eksNodeRole"
   assume_role_policy = data.aws_iam_policy_document.instance-assume-role-policy.json
 }
 
 resource "aws_iam_role_policy_attachment" "AmazonEKSWorkerNodePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
-  role       = aws_iam_role.eksNodeGroup.name
+  role       = aws_iam_role.eksNodeRole.name
 }
 
 resource "aws_iam_role_policy_attachment" "AmazonEKS_CNI_Policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
-  role       = aws_iam_role.eksNodeGroup.name
+  role       = aws_iam_role.eksNodeRole.name
 }
 
 resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-  role       = aws_iam_role.eksNodeGroup.name
+  role       = aws_iam_role.eksNodeRole.name
 }
 
 # data "tls_certificate" "eks" {
