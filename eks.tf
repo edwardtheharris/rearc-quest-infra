@@ -5,10 +5,10 @@ resource "aws_eks_cluster" "default" {
   version = "1.21"
   vpc_config {
     public_access_cidrs = [
-        var.eks_access_cidr
+      var.eks_access_cidr
     ]
     security_group_ids = [
-        aws_security_group.allow-ec2.id
+      aws_security_group.allow-ec2.id
     ]
     subnet_ids = [
       data.aws_subnet.us-west-2a.id,
@@ -30,12 +30,16 @@ resource "aws_eks_node_group" "us-west-2a" {
   cluster_name    = aws_eks_cluster.default.name
   node_group_name = "us-west-2a"
   node_role_arn   = aws_iam_role.eksNodeGroup.arn
-  subnet_ids = [data.aws_subnet.us-west-2a.id]
+  subnet_ids      = [data.aws_subnet.us-west-2a.id]
 
   scaling_config {
     desired_size = 1
     max_size     = 1
     min_size     = 1
+  }
+
+  tags = {
+    Name = "rearc-us-west-2a"
   }
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
@@ -51,12 +55,16 @@ resource "aws_eks_node_group" "us-west-2b" {
   cluster_name    = aws_eks_cluster.default.name
   node_group_name = "us-west-2b"
   node_role_arn   = aws_iam_role.eksNodeGroup.arn
-  subnet_ids = [data.aws_subnet.us-west-2b.id]
+  subnet_ids      = [data.aws_subnet.us-west-2b.id]
 
   scaling_config {
     desired_size = 1
     max_size     = 1
     min_size     = 1
+  }
+
+  tags = {
+    Name = "rearc-us-west-2b"
   }
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
@@ -72,12 +80,16 @@ resource "aws_eks_node_group" "us-west-2c" {
   cluster_name    = aws_eks_cluster.default.name
   node_group_name = "us-west-2c"
   node_role_arn   = aws_iam_role.eksNodeGroup.arn
-  subnet_ids = [data.aws_subnet.us-west-2c.id]
+  subnet_ids      = [data.aws_subnet.us-west-2c.id]
 
   scaling_config {
     desired_size = 1
     max_size     = 1
     min_size     = 1
+  }
+
+  tags = {
+    Name = "rearc-us-west-2c"
   }
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
@@ -93,12 +105,16 @@ resource "aws_eks_node_group" "us-west-2d" {
   cluster_name    = aws_eks_cluster.default.name
   node_group_name = "us-west-2d"
   node_role_arn   = aws_iam_role.eksNodeGroup.arn
-  subnet_ids = [data.aws_subnet.us-west-2d.id]
+  subnet_ids      = [data.aws_subnet.us-west-2d.id]
 
   scaling_config {
     desired_size = 1
     max_size     = 1
     min_size     = 1
+  }
+
+  tags = {
+    Name = "rearc-us-west-2d"
   }
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
