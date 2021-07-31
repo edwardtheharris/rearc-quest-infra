@@ -34,7 +34,6 @@ resource "aws_eks_node_group" "us-west-2a" {
 
   remote_access {
     ec2_ssh_key = aws_key_pair.rearc.key_name
-    source_security_group_ids = [aws_security_group.allow-ec2.id]
   }
 
   scaling_config {
@@ -70,7 +69,6 @@ resource "aws_eks_node_group" "us-west-2b" {
 
   remote_access {
     ec2_ssh_key = aws_key_pair.rearc.key_name
-    source_security_group_ids = [aws_security_group.allow-ec2.id]
   }
 
   scaling_config {
@@ -106,7 +104,6 @@ resource "aws_eks_node_group" "us-west-2c" {
 
   remote_access {
     ec2_ssh_key = aws_key_pair.rearc.key_name
-    source_security_group_ids = [aws_security_group.allow-ec2.id]
   }
 
   scaling_config {
@@ -142,7 +139,6 @@ resource "aws_eks_node_group" "us-west-2d" {
 
   remote_access {
     ec2_ssh_key = aws_key_pair.rearc.key_name
-    source_security_group_ids = [aws_security_group.allow-ec2.id]
   }
 
   scaling_config {
