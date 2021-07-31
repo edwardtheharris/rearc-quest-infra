@@ -167,10 +167,6 @@ resource "aws_lb_listener" "rearc-redirect" {
       status_code = "HTTP_301"
     }
   }
-
-  tags {
-    Purpose = "redirect"
-  }
 }
 
 resource "aws_lb_listener" "rearc-ssl" {
@@ -183,10 +179,6 @@ resource "aws_lb_listener" "rearc-ssl" {
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.rearc.arn
-  }
-
-  tags {
-    purpose = "forward"
   }
 }
 
