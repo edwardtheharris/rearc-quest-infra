@@ -92,3 +92,9 @@ Run the image build command. And push the image.
 docker build -t 629354604262.dkr.ecr.us-west-2.amazonaws.com/rearc/quest -f docker/Dockerfile docker/
 docker push 629354604262.dkr.ecr.us-west-2.amazonaws.com/rearc/quest
 ```
+
+Next, deploy an ECS cluster with one node per AZ. We'll do the same with EKS in a bit, or maybe not.
+
+### ECS Cluster 
+
+

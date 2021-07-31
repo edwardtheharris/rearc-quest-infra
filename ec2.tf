@@ -42,11 +42,11 @@ resource "aws_security_group" "allow-ec2" {
 
 
 resource "aws_instance" "rearc" {
-  ami            = data.aws_ami.amazon.id
-  instance_type  = "t3.micro"
-  key_name       = aws_key_pair.rearc.key_name
+  ami                    = data.aws_ami.amazon.id
+  instance_type          = "t3.micro"
+  key_name               = aws_key_pair.rearc.key_name
   vpc_security_group_ids = [aws_security_group.allow-ec2.id]
-  user_data      = file("ec2/user-data.sh")
+  user_data              = file("ec2/user-data.sh")
 
   depends_on = [
     aws_key_pair.rearc,
