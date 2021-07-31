@@ -3,7 +3,7 @@ data "aws_vpc" "default" {
 }
 
 data "aws_route_table" "default" {
-  id = "rtb-4de50837"
+  route_table_id = "rtb-4de50837"
 }
 
 data "aws_subnet" "us-west-2a" {
