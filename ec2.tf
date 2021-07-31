@@ -40,7 +40,6 @@ resource "aws_security_group" "allow-ec2" {
   }
 }
 
-
 # resource "aws_instance" "rearc" {
 #   ami = data.aws_ami.amazon.id
 #   depends_on = [
