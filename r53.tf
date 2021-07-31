@@ -61,13 +61,14 @@ resource "aws_route53_record" "hamdance-com" {
 }
 
 resource "aws_route53_record" "hamdance-validation-com" {
-  zone_id = aws_route53_zone.hamdance.zone_id
+  zone_id = aws_route53_zone.hamdance-com.zone_id
   name = "_51b625b8da939d09ec65fa91d93ec3e7.hamdance.com."
   type = "CNAME"
   ttl = 5
   records = ["_8c42f22b5a89682447755db8f3879f3c.qqqfmgwtgn.acm-validations.aws."]
   depends_on = [
-    aws_acm_certificate.hamdance
+    aws_acm_certificate.hamdance-com
+    aws_route53_zone.hamdance-com.zone_id
   ]
 }
 
