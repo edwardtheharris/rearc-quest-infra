@@ -3,7 +3,7 @@ output "ecr_repository" {
 }
 
 output "password" {
-  value = aws_iam_user_login_profile.example.encrypted_password
+  value = aws_iam_user_login_profile.admin.encrypted_password
 }
 
 output "access_key_id" {
