@@ -22,6 +22,38 @@ data "aws_subnet" "us-west-2d" {
   id = "subnet-d316f2f9"
 }
 
+resource "aws_subnet" "us-west-2a" {
+  tags = {
+    Name = "us-west-2a"
+    "kubernetes/cluster/default" = "shared"
+  }
+  vpc_id = data.aws_vpc.default.id
+}
+
+resource "aws_subnet" "us-west-2b" {
+  tags = {
+    Name = "us-west-2b"
+    "kubernetes/cluster/default" = "shared"
+  }
+  vpc_id = data.aws_vpc.default.id
+}
+
+resource "aws_subnet" "us-west-2c" {
+  tags = {
+    Name = "us-west-2c"
+    "kubernetes/cluster/default" = "shared"
+  }
+  vpc_id = data.aws_vpc.default.id
+}
+
+resource "aws_subnet" "us-west-2d" {
+  tags = {
+    Name = "us-west-2d"
+    "kubernetes/cluster/default" = "shared"
+  }
+  vpc_id = data.aws_vpc.default.id
+}
+
 resource "aws_route_table_association" "us-west-2a" {
   subnet_id      = data.aws_subnet.us-west-2a.id
   route_table_id = data.aws_route_table.default.id
