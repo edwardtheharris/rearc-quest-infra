@@ -19,7 +19,12 @@ resource "aws_ecs_task_definition" "quest" {
       cpu       = 100
       memory    = 128
       essential = true
-      environment = var.secret_word
+      environment = [
+        {
+          name  = "SECRET_WORD"
+          value = var.secret_word
+        }
+      ]
       portMappings = [
         {
           containerPort = 3000

@@ -38,7 +38,7 @@ data "aws_iam_policy_document" "instance-assume-role-policy" {
     actions = ["sts:AssumeRole"]
 
     principals {
-      type        = "Service"
+      type = "Service"
       identifiers = [
         "ec2.amazonaws.com",
       ]
@@ -66,7 +66,7 @@ data "aws_iam_policy_document" "service-assume-role-policy" {
     actions = ["sts:AssumeRole"]
 
     principals {
-      type        = "Service"
+      type = "Service"
       identifiers = [
         "ecs.amazonaws.com"
       ]
@@ -75,16 +75,16 @@ data "aws_iam_policy_document" "service-assume-role-policy" {
 }
 
 resource "aws_iam_role" "ecsServiceRole" {
-  name                = "ecsServiceRole"
-  assume_role_policy  = data.aws_iam_policy_document.service-assume-role-policy.json
+  name               = "ecsServiceRole"
+  assume_role_policy = data.aws_iam_policy_document.service-assume-role-policy.json
 }
 
 resource "aws_iam_role_policy_attachment" "ecs-full-service" {
-  role = aws_iam_role.ecsServiceRole.name
+  role       = aws_iam_role.ecsServiceRole.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonECS_FullAccess"
 }
 
-resource "aws_iam_role_policy_attachment" "ecs-task-exec" {   
-  role = aws_iam_role.ecsServiceRole.name
+resource "aws_iam_role_policy_attachment" "ecs-task-exec" {
+  role       = aws_iam_role.ecsServiceRole.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
