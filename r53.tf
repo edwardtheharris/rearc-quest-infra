@@ -41,9 +41,9 @@ resource "aws_acm_certificate" "hamdance" {
   }
 }
 
-resource "aws_route53_zone" "hamdance-com" {
-  name = "hamdance.com"
-}
+# resource "aws_route53_zone" "hamdance-com" {
+#   name = "hamdance.com"
+# }
 
 resource "aws_route53_record" "hamdance-com" {
   zone_id = aws_route53_zone.hamdance.zone_id
