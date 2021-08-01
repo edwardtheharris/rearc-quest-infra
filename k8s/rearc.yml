@@ -26,11 +26,24 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: rearc-service-np
+  name: rearc-lb
 spec:
   ports:
-    - port: 3000
-      targetPort: 80
+    - port: 80
+      targetPort: 3000
+      protocol: TCP
+  type: LoadBalancer
+  selector:
+    app.kubernetes.io/name: rearc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rearc-np
+spec:
+  ports:
+    - port: 80
+      targetPort: 3000
       protocol: TCP
   type: NodePort
   selector:
@@ -39,16 +52,31 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: rearc-ingress
+  name: rearc
   annotations:
     kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/load-balancer-name: rearc-eks
     alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-west-2:629354604262:certificate/064dc7c7-24d8-4794-9ab6-5e13591c9594
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
+    alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
+    alb.ingress.kubernetes.io/subnets: subnet-54970a2c, subnet-c717a88d
 spec:
   rules:
-    - http:
+    - host: hamdance.com
+      http:
         paths:
           - path: /*
+            pathType: Prefix
             backend:
-              service: rearc-service-np
-              port: 80
+              service: 
+                name: ssl-redirect
+                port: 
+                  name: use-annotation
+          - path: /*
+            pathType: Prefix
+            backend:
+              service:  
+                name: rearc-np
+                port: 
+                  number: 80
