@@ -58,8 +58,8 @@ resource "aws_route53_record" "hamdance-com" {
   ]
 
   alias {
-    name                   = data.aws_elb.eks.dns_name
-    zone_id                = data.aws_elb.eks.zone_id
+    name                   = data.aws_lb.eks.dns_name
+    zone_id                = data.aws_lb.eks.zone_id
     evaluate_target_health = true
   }
 }
