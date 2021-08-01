@@ -196,6 +196,12 @@ resource "aws_iam_policy" "AWSLoadBalancerControllerIAMPolicy" {
   policy = file("iam/alb-controller-policy.json")
 }
 
+resource "aws_iam_role_policy_attachment" "AWSLoadBalancerControllerIAMPolicy" {
+  policy_arn = aws_iam_policy.AWSLoadBalancerControllerIAMPolicy.arn
+  role       = aws_iam_role.eksNodeRole.name
+}
+
+
 resource "aws_iam_role_policy_attachment" "eks-alb-controller" {
   role = aws_iam_role.AmazonEKSLoadBalancerControllerRole.name
   policy_arn = aws_iam_policy.AWSLoadBalancerControllerIAMPolicy.arn
