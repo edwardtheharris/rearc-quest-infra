@@ -17,6 +17,9 @@ spec:
       containers:
       - name: rearc
         image: 629354604262.dkr.ecr.us-west-2.amazonaws.com/rearc/quest:latest
+        env:
+          - name: SECRET_WORD
+            value: "TwelveFactor"
         ports:
           - containerPort: 3000
 ---
