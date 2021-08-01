@@ -23,8 +23,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: rearc-service
+  name: rearc-service-lb
 spec:
+  type: LoadBalancer
   selector:
     app: rearc
   ports:
