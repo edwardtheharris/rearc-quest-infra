@@ -185,3 +185,13 @@ resource "aws_iam_role" "eks-alb-controller" {
   assume_role_policy = data.aws_iam_policy_document.eks-oidc.json
   name               = "eks-alb-controller"
 }
+
+resource "aws_iam_policy" "AWSLoadBalancerControllerIAMPolicy" {
+  name        = "AWSLoadBalancerControllerIAMPolicy"
+  path        = "/"
+  description = "AWS ALB Controller Policy"
+
+  # Terraform's "jsonencode" function converts a
+  # Terraform expression result to valid JSON syntax.
+  policy = file("iam/alb-controller-policy.json")
+}
