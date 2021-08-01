@@ -193,5 +193,5 @@ resource "aws_iam_policy" "AWSLoadBalancerControllerIAMPolicy" {
 
   # Terraform's "jsonencode" function converts a
   # Terraform expression result to valid JSON syntax.
-  policy = file("iam/alb-contoller-policy.json")
+  policy = file("iam/alb-controller-policy.json")
 }
