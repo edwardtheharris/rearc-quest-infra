@@ -181,9 +181,9 @@ data "aws_iam_policy_document" "eks-oidc" {
   }
 }
 
-resource "aws_iam_role" "eks-alb-controller" {
+resource "aws_iam_role" "AmazonEKSLoadBalancerControllerRole" {
   assume_role_policy = data.aws_iam_policy_document.eks-oidc.json
-  name               = "eks-alb-controller"
+  name               = "AmazonEKSLoadBalancerControllerRole"
 }
 
 resource "aws_iam_policy" "AWSLoadBalancerControllerIAMPolicy" {
