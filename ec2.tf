@@ -37,6 +37,7 @@ resource "aws_security_group" "allow-ec2" {
 
   tags = {
     Name = "allow-ec2"
+    "kubernetes.io/cluster/default" = "owned"
   }
 }
 
