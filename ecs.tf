@@ -15,9 +15,6 @@ resource "aws_ecs_service" "rearc" {
 }
 
 resource "aws_ecs_task_definition" "quest" {
-  depends_on = [
-    aws_ecs_service.rearc
-  ]
   family = "quest"
   container_definitions = jsonencode([
     {
