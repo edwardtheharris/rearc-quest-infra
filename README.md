@@ -6,6 +6,14 @@ Terraform and other related code required to deploy the rearc quest app.
 
 This code is meant to deploy and run the [rearc quest](https://github.com/rearc/quest) web app.
 
+### tl; dr
+
+You can find the app deployed in two locations having been deployed using two orchestrators.
+Firstly, you can see the service running on ECS at [hamdance.net](http://hamdance.net).
+Secondly, you can see the service running on EKS at [hamdance.com](http://hamdance.com).
+Finally, please note that while the links in this readme use the `HTTP` protocol,
+both sites redirect to https becase we are not beasts and this is a civilization.
+
 ## Usage
 
 If you're starting from a fresh AWS account first thing is to install the AWS CLI. That is, after you've cloned this repository.
@@ -97,7 +105,7 @@ Next, deploy an ECS cluster with one node per AZ. We'll do the same with EKS in 
 
 ### ECS Cluster
 
-Use default because it's easier.
+Name the cluster `default` because this saves a lot of hassle with the ECS node user data settings.
 
 Easy enough.
 
