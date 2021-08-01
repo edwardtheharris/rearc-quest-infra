@@ -6,6 +6,14 @@ Terraform and other related code required to deploy the rearc quest app.
 
 This code is meant to deploy and run the [rearc quest](https://github.com/rearc/quest) web app.
 
+### tl;dr
+
+You can find the app deployed in two locations having been deployed using two orchestrators.
+Firstly, you can see the service running on ECS at [hamdance.net](http://hamdance.net).
+Secondly, you can see the service running on EKS at [hamdance.com](http://hamdance.com).
+Finally, please note that while the links in this readme use the `HTTP` protocol,
+both sites redirect to `HTTPS` becase we are not beasts and this is a civilization.
+
 ## Usage
 
 If you're starting from a fresh AWS account first thing is to install the AWS CLI. That is, after you've cloned this repository.
@@ -93,18 +101,171 @@ docker build -t 629354604262.dkr.ecr.us-west-2.amazonaws.com/rearc/quest -f dock
 docker push 629354604262.dkr.ecr.us-west-2.amazonaws.com/rearc/quest
 ```
 
-Next, deploy an ECS cluster with one node per AZ. We'll do the same with EKS in a bit, or maybe not.
+Next, deploy an ECS cluster with one node per AZ. We'll do the same with EKS in a bit. . . or maybe not.
 
 ### ECS Cluster
 
-Use default because it's easier.
+Name the cluster `default` because this saves a lot of hassle with the ECS node user data settings.
 
-Easy enough.
+```bash
+terraform apply -target aws_ecs_service.rearc
+```
 
-With TLS and everything.
+That will deploy the ECS cluster and the required service and task configuration thanks to dependency chains.
+
+### ALB
+
+Now we should deploy the ALB so that traffic is balanced correctly.
+
+```bash
+terraform apply -target aws_lb.rearc
+```
+
+Should do it, if it doesn't, you should apply the remaining `aws_lb*` resources in the `ec2.tf` file.
+
+### Route 53
+
+Next, we should set up the DNS. For this you'll have to log into the AWS console and register a domain
+from the route53 service. You could register a second domain if you plan to also deploy to EKS.
+
+Once the domain(s) is(are) registered, we can deploy the route53 resources.
+
+```bash
+terraform apply -target aws_route53_record.hamdance
+```
+
+This will create the hosted zone and a DNS record to allow for accessing the service that is backed by an ECS cluster.
+
+Next we add and validate certs.
+
+```bash
+terraform apply -target aws_acm_certificate.hamdance
+```
+
+Once this is done you can log in to the AWS console and navigate
+to the ACM service to find the newly created cert and its related
+validation requirements.
+
+Next, update `r53.tf` so that `aws_route53_record.hamdance-validation`
+matches the name and value listed on the ACM page.
+
+When that's done, you can deploy the validation records.
+
+```bash
+terraform apply -target aws_route53_record.hamdance-validation
+```
+
+This should be success and it looks like this:
 
 ![hamdance.net](img/hamdance.net.png)
 
 ### EKS Cluster
 
-In progress.
+Now for the really fun part.
+
+First thing is to deploy the EKS cluster and it's related node groups.
+
+```bash
+terraform apply -target aws_eks_cluster.default
+```
+
+This will take around 15 or 20 minutes, once it's done
+you need to update your local kubeconfig (`brew install kubernetes-cli` if you happen to not have kubectl handy)
+with the handy tool that AWS CLI provides for this purpose.
+
+```bash
+aws eks update-kubeconfig --name default
+```
+
+You will need to switch the context if this isn't your first
+kubeconfig update.
+
+```bash
+kubectl config get-contexts
+kubectl config use-context $yourcontext
+```
+
+Try to fetch some objects from the EKS cluster to be sure it's working.
+
+```bash
+kubectl get all
+```
+
+That should show you a mostly empty default namespace.
+
+### EKS services
+
+Finally, the prestige. . .
+
+We have an empty (and useless) EKS cluster now, so let's make it
+do something useful.
+
+#### IAM Updates
+
+To make this work, we need to make some changes to the IAM
+policies and roles available. This means applying all of the
+resources in `iam.tf` that are below the `# EKS` comment.
+
+```bash
+terraform apply -target aws_iam_role.eks
+terraform apply -target aws_iam_role.eksNodeRole
+```
+
+Should at least create the basics, you will also want to make sure
+that all of the required policies and attachments
+have been created before moving on or you will
+see authentication errors
+in the load balancer controller logs.
+
+#### AWS Load Balancer Controller
+
+Because we're using EKS we don't have to create or maintain
+the load balancers our service will use, we can create and
+maintain EKS services to do that for us.
+
+This is done with the
+[AWS Load Balancer Controller](https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.1/). The source files for which are included in the `k8s/` folder of this directory.
+
+This relies on a service called Cert Manager, so this is the
+the first thing we will deploy to our cluster.
+
+```bash
+kubectl apply -f k8s/cert-manager.yml
+```
+
+Now it's safe to deploy the load balancer controller.
+
+```bash
+kubectl apply -f k8s/aws-load-balancer-controller.yml
+```
+
+WHen that's done, you can verify it's running by checking the
+`kube-system` namespace.
+
+```bash
+kubectl -n kube-system get all
+```
+
+You should see a pod that looks like the aws
+load balancer controller running.
+
+#### And now for the service
+
+Now we've got everything we need to deploy the rearc service.
+
+```bash
+kubectl apply -f k8s/rearc.yml
+```
+
+This should deploy the service and associated ingress
+controllers and load balancers so that we can now revisit
+the Route53 deployment instructions above, except this time
+we need to deploy the reaources related to
+`aws_route53_zone.hamdance-com`.
+
+In the unlikely event that this readme has proven sufficient,
+congratulations, you just deployed a very simple web service
+in a pair of architectures almost complex enough to be worthy
+of something like the obfuscated Perl contest.
+
+Thanks for playing along.
