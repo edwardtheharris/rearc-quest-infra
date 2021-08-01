@@ -28,6 +28,7 @@ resource "aws_subnet" "us-west-2a" {
   tags = {
     Name = "us-west-2a"
     "kubernetes/cluster/default" = "shared"
+    "kubernetes.io/role/elb" = "1"
   }
   vpc_id = data.aws_vpc.default.id
 }
@@ -38,6 +39,7 @@ resource "aws_subnet" "us-west-2b" {
   tags = {
     Name = "us-west-2b"
     "kubernetes/cluster/default" = "shared"
+    "kubernetes.io/role/elb" = "1"
   }
   vpc_id = data.aws_vpc.default.id
 }
@@ -48,6 +50,7 @@ resource "aws_subnet" "us-west-2c" {
   tags = {
     Name = "us-west-2c"
     "kubernetes/cluster/default" = "shared"
+    "kubernetes.io/role/elb" = "1"
   }
   vpc_id = data.aws_vpc.default.id
 }
@@ -58,6 +61,7 @@ resource "aws_subnet" "us-west-2d" {
   tags = {
     Name = "us-west-2d"
     "kubernetes/cluster/default" = "shared"
+    "kubernetes.io/role/elb" = "1"
   }
   vpc_id = data.aws_vpc.default.id
 }
