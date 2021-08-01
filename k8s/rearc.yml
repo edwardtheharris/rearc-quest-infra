@@ -52,16 +52,22 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: rearc
+  name: rearc-ingress
   annotations:
     kubernetes.io/ingress.class: alb
-    alb.ingress.kubernetes.io/load-balancer-name: rearc-eks
+    alb.ingress.kubernetes.io/load-balancer-name: rearc-ingress
     alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-west-2:629354604262:certificate/064dc7c7-24d8-4794-9ab6-5e13591c9594
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
     alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
     alb.ingress.kubernetes.io/subnets: subnet-54970a2c, subnet-c717a88d, subnet-8e98f4d3, subnet-d316f2f9
 spec:
+  defaultBackend:
+    resource:
+      apiGroup: k8s.example.com
+      kind: Service
+      name: rearc-lb
   rules:
     - host: hamdance.com
       http:
