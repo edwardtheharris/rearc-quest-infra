@@ -212,6 +212,6 @@ resource "aws_lb_target_group_attachment" "ecs-2d" {
 #   port             = 3000
 # }
 
-data "aws_lb" "eks" {
-  name = "rearc-ingress"
-}
+# data "aws_lb" "eks" {
+#   name = "rearc-ingress"
+# }
