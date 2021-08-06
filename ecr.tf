@@ -7,7 +7,7 @@ resource "aws_ecr_repository" "rearc-quest" {
   }
 }
 
-data "aws_ecr_image" "rearc-quest" {
-  repository_name = "rearc/quest"
-  image_tag       = "latest"
-}
+# data "aws_ecr_image" "rearc-quest" {
+#   repository_name = "rearc/quest"
+#   image_tag       = "latest"
+# }
