@@ -49,20 +49,20 @@ resource "aws_route53_zone" "hamdance-com" {
   name = "hamdance.com"
 }
 
-resource "aws_route53_record" "hamdance-com" {
-  zone_id = aws_route53_zone.hamdance-com.zone_id
-  name    = "hamdance.com"
-  type    = "A"
-  depends_on = [
-    aws_route53_zone.hamdance-com
-  ]
+# resource "aws_route53_record" "hamdance-com" {
+#   zone_id = aws_route53_zone.hamdance-com.zone_id
+#   name    = "hamdance.com"
+#   type    = "A"
+#   depends_on = [
+#     aws_route53_zone.hamdance-com
+#   ]
 
-  alias {
-    name                   = data.aws_lb.eks.dns_name
-    zone_id                = data.aws_lb.eks.zone_id
-    evaluate_target_health = true
-  }
-}
+#   alias {
+#     name                   = data.aws_lb.eks.dns_name
+#     zone_id                = data.aws_lb.eks.zone_id
+#     evaluate_target_health = true
+#   }
+# }
 
 resource "aws_route53_record" "hamdance-validation-com" {
   zone_id = aws_route53_zone.hamdance-com.zone_id
