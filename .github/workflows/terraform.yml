@@ -97,7 +97,7 @@ jobs:
         if: always()
         run: |
           ls -lah
-          terratest_log_parser -testlog test_output.log -outputdir test_output
+          terratest_log_parser -testlog test/test_output.log -outputdir test_output
 
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v2
