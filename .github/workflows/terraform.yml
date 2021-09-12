@@ -85,8 +85,17 @@ jobs:
           GITHUB_OAUTH_TOKEN=${{ secrets.ACCESS_TOKEN }} gruntwork-install --binary-name 'terratest_log_parser' --repo 'https://github.com/gruntwork-io/terratest' --tag 'v0.13.13'
           sudo apt-get -y update
           sudo apt-get -y install golang
+          terraform workspace select test
           cd test
-          go mod init
+          go test -timeout 30m | tee results.log
+          terratest_log_parser -testlog results.log -outputdir test-results
+
+
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: test-results/**/*.xml
 
 
       # Checks that all Terraform configuration files adhere to a canonical format
