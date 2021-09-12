@@ -2,7 +2,6 @@ variable "aws_profile" {
   default = "default"
 }
 
-
 variable "eks_access_cidr" {
   default = "10.0.0.0/8"
 }

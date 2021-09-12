@@ -13,6 +13,8 @@ terraform {
   }
 }
 
+data "aws_region" "current" {}
+
 # data "aws_eks_cluster" "default" {
 #   name = "default"
 # }

@@ -1,3 +1,7 @@
+output "aws_region" {
+  value = data.aws_region.current.name
+}
+
 # output "ecr_repository" {
 #   value = aws_ecr_repository.rearc-quest.repository_url
 # }
