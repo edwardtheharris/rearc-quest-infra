@@ -1,8 +1,5 @@
-data "aws_vpc" "default" {
-  filter {
-    name  = "is-default"
-    values = ["true"]
-  }
+resource "aws_vpc" "k8s" {
+  cidr_block = var.vpc_cidr
 }
 
 # data "aws_route_table" "default" {
@@ -33,40 +30,40 @@ resource "aws_subnet" "subnet_a" {
     "kubernetes/cluster/default" = "shared"
     "kubernetes.io/role/elb"     = "1"
   }
-  vpc_id = data.aws_vpc.default.id
+  vpc_id = aws_vpc.k8s.id
 }
 
 resource "aws_subnet" "subnet_b" {
-  cidr_block              = "172.31.32.0/20"
+  cidr_block              = var.subnet_b_cidr
   map_public_ip_on_launch = true
   tags = {
     Name                         = "public-subnet-b"
     "kubernetes/cluster/default" = "shared"
     "kubernetes.io/role/elb"     = "1"
   }
-  vpc_id = data.aws_vpc.default.id
+  vpc_id = aws_vpc.k8s.id
 }
 
 resource "aws_subnet" "subnet_c" {
-  cidr_block              = "172.31.0.0/20"
+  cidr_block              = var.subnet_c_cidr
   map_public_ip_on_launch = true
   tags = {
     Name                         = "public-subnet-c"
     "kubernetes/cluster/default" = "shared"
     "kubernetes.io/role/elb"     = "1"
   }
-  vpc_id = data.aws_vpc.default.id
+  vpc_id = aws_vpc.k8s.id
 }
 
 resource "aws_subnet" "subnet_d" {
-  cidr_block              = "172.31.48.0/20"
+  cidr_block              = var.subnet_d_cidr
   map_public_ip_on_launch = true
   tags = {
     Name                         = "public-subnet-d"
     "kubernetes/cluster/default" = "shared"
     "kubernetes.io/role/elb"     = "1"
   }
-  vpc_id = data.aws_vpc.default.id
+  vpc_id = aws_vpc.k8s.id
 }
 
 # resource "aws_route_table_association" "us-west-2a" {
@@ -95,6 +92,6 @@ resource "aws_subnet" "subnet_d" {
 # }
 
 # resource "aws_vpc_dhcp_options_association" "dns_resolver" {
-#   vpc_id          = data.aws_vpc.default.id
+#   vpc_id          = aws_vpc.k8s.id
 #   dhcp_options_id = aws_vpc_dhcp_options.dns_resolver.id
 # }

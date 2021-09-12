@@ -45,9 +45,9 @@ output "subnet_d_id" {
   value = aws_subnet.subnet_d.id
 }
 output "vpc_id" {
-  value = data.aws_vpc.default.id
+  value = aws_vpc.k8s.id
 }
 
 output "vpc_cidr" {
-  value = data.aws_vpc.default.cidr_block
+  value = aws_vpc.k8s.cidr_block
 }
