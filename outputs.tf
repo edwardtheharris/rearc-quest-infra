@@ -25,6 +25,21 @@ output "hello_world" {
 #   value = aws_iam_access_key.admin.encrypted_secret
 # }
 
+output "subnet_a_id" {
+  value = aws_subnet.subnet_a.id
+}
+
+output "subnet_b_id" {
+  value = aws_subnet.subnet_b.id
+}
+
+output "subnet_c_id" {
+  value = aws_subnet.subnet_c.id
+}
+
+output "subnet_d_id" {
+  value = aws_subnet.subnet_d.id
+}
 output "vpc_id" {
   value = data.aws_vpc.default.id
 }

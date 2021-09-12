@@ -1,7 +1,7 @@
 data "aws_vpc" "default" {
   filter {
     name  = "Name"
-    value = "-"
+    values = ["-"]
   }
 }
 
