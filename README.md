@@ -1,5 +1,7 @@
 # rearc-quest-infra
 
+[![wakatime](https://wakatime.com/badge/github/edwardtheharris/rearc-quest-infra.svg)](https://wakatime.com/badge/github/edwardtheharris/rearc-quest-infra)
+
 Terraform and other related code required to deploy the rearc quest app.
 
 ## Rearc Quest app
