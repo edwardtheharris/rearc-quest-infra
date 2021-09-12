@@ -1,7 +1,7 @@
 data "aws_vpc" "default" {
   filter {
-    name  = "name"
-    values = ["-"]
+    name  = "is-default"
+    values = ["true"]
   }
 }
 
