@@ -87,7 +87,7 @@ jobs:
           sudo apt-get -y install golang
           terraform workspace select test
           cd test
-          go test -timeout 30m | tee test_output.log
+          go test -timeout 30m | tee test_output.log | true
           terratest_log_parser -testlog test_output.log -outputdir test_output
 
       - name: Publish Test Report
