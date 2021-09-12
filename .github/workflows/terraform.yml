@@ -78,7 +78,7 @@ jobs:
       - name: Terraform Init
         run: |
           terraform init
-          terraform workspace select default
+          terraform workspace select test
 
       - name: Terraform Test
         run: |
