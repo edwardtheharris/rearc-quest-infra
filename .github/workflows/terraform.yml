@@ -105,35 +105,15 @@ jobs:
         with:
           report_paths: 'test_output/report.xml'
 
-      - name: Upload Unit Test Results
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action/composite@v1
         if: always()
-        uses: actions/upload-artifact@v2
         with:
-          name: Unit Test Results
-          path: test_output/result.xml
+          files: test_output/report.xml
 
       # Checks that all Terraform configuration files adhere to a canonical format
       - name: Terraform Format
         run: terraform fmt -check
-
-
-  publish-test-results:
-    name: "Publish Unit Tests Results"
-    needs: terraform-test
-    runs-on: windows-latest
-    # the build-and-test job might be skipped, we don't need to run this job then
-    if: success() || failure()
-
-    steps:
-      - name: Download Artifacts
-        uses: actions/download-artifact@v2
-        with:
-          path: test_output
-
-      - name: Publish Unit Test Results
-        uses: EnricoMi/publish-unit-test-result-action/composite@v1
-        with:
-          files: test_output/**/*.xml
 
   terraform:
     name: "Terraform Apply"
