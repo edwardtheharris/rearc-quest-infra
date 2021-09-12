@@ -18,8 +18,10 @@ func TestTerraformAwsNetworkExample(t *testing.T) {
 
 	// Give the VPC and the subnets correct CIDRs
 	vpcCidr := "172.32.0.0/16"
-	privateSubnetCidr := "172.32.16.0/20"
-	publicSubnetCidr := "172.32.32.0/20"
+	subnetACidr := "172.32.16.0/20"
+	subnetBCidr := "172.32.32.0/20"
+	subnetCCidr := "172.32.48.0/20"
+	subnetDCidr := "172.32.64.0/20"
 
 	// Construct the terraform options with default retryable errors to handle the most common retryable errors in
 	// terraform testing.
@@ -29,10 +31,12 @@ func TestTerraformAwsNetworkExample(t *testing.T) {
 
 		// Variables to pass to our Terraform code using -var options
 		Vars: map[string]interface{}{
-			"main_vpc_cidr":       vpcCidr,
-			"private_subnet_cidr": privateSubnetCidr,
-			"public_subnet_cidr":  publicSubnetCidr,
-			"aws_region":          awsRegion,
+			"vpc_cidr":      vpcCidr,
+			"subnet_a_cidr": subnetACidr,
+			"subnet_b_cidr": subnetBCidr,
+			"subnet_c_cidr": subnetCCidr,
+			"subnet_d_cidr": subnetDCidr,
+			"aws_region":    awsRegion,
 		},
 	})
 
@@ -43,15 +47,15 @@ func TestTerraformAwsNetworkExample(t *testing.T) {
 	terraform.InitAndApply(t, terraformOptions)
 
 	// Run `terraform output` to get the value of an output variable
-	publicSubnetId := terraform.Output(t, terraformOptions, "public_subnet_id")
+	subnetACidr := terraform.Output(t, terraformOptions, "subnet_a_cidr")
 	privateSubnetId := terraform.Output(t, terraformOptions, "private_subnet_id")
-	vpcId := terraform.Output(t, terraformOptions, "main_vpc_id")
+	vpcId := terraform.Output(t, terraformOptions, "vpc_id")
 
 	subnets := aws.GetSubnetsForVpc(t, vpcId, awsRegion)
 
 	require.Equal(t, 2, len(subnets))
 	// Verify if the network that is supposed to be public is really public
-	assert.True(t, aws.IsPublicSubnet(t, publicSubnetId, awsRegion))
+	assert.True(t, aws.IsPublicSubnet(t, subnetAId, awsRegion))
 	// Verify if the network that is supposed to be private is really private
-	assert.False(t, aws.IsPublicSubnet(t, privateSubnetId, awsRegion))
+	assert.True(t, aws.IsPublicSubnet(t, subnetBId, awsRegion))
 }

@@ -1,5 +1,8 @@
 data "aws_vpc" "default" {
-  id = "vpc-af3030d7"
+  filter {
+    name  = "Name"
+    value = "-"
+  }
 }
 
 # data "aws_route_table" "default" {
@@ -22,44 +25,44 @@ data "aws_vpc" "default" {
 #   id = "subnet-d316f2f9"
 # }
 
-resource "aws_subnet" "us-west-2a" {
-  cidr_block              = "172.31.16.0/20"
+resource "aws_subnet" "subnet_a" {
+  cidr_block              = var.subnet_a_cidr
   map_public_ip_on_launch = true
   tags = {
-    Name                         = "us-west-2a"
+    Name                         = "public-subnet-a"
     "kubernetes/cluster/default" = "shared"
     "kubernetes.io/role/elb"     = "1"
   }
   vpc_id = data.aws_vpc.default.id
 }
 
-resource "aws_subnet" "us-west-2b" {
+resource "aws_subnet" "subnet_b" {
   cidr_block              = "172.31.32.0/20"
   map_public_ip_on_launch = true
   tags = {
-    Name                         = "us-west-2b"
+    Name                         = "public-subnet-b"
     "kubernetes/cluster/default" = "shared"
     "kubernetes.io/role/elb"     = "1"
   }
   vpc_id = data.aws_vpc.default.id
 }
 
-resource "aws_subnet" "us-west-2c" {
+resource "aws_subnet" "subnet_c" {
   cidr_block              = "172.31.0.0/20"
   map_public_ip_on_launch = true
   tags = {
-    Name                         = "us-west-2c"
+    Name                         = "public-subnet-c"
     "kubernetes/cluster/default" = "shared"
     "kubernetes.io/role/elb"     = "1"
   }
   vpc_id = data.aws_vpc.default.id
 }
 
-resource "aws_subnet" "us-west-2d" {
+resource "aws_subnet" "subnet_d" {
   cidr_block              = "172.31.48.0/20"
   map_public_ip_on_launch = true
   tags = {
-    Name                         = "us-west-2d"
+    Name                         = "public-subnet-d"
     "kubernetes/cluster/default" = "shared"
     "kubernetes.io/role/elb"     = "1"
   }

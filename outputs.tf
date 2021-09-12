@@ -5,6 +5,9 @@
 # # output "endpoint" {
 # #   value = aws_eks_cluster.default.endpoint
 # # }
+output "hello_world" {
+  value = "Hello, World!"
+}
 
 # # output "kubeconfig-certificate-authority-data" {
 # #   value = aws_eks_cluster.default.certificate_authority[0].data
@@ -22,6 +25,6 @@
 #   value = aws_iam_access_key.admin.encrypted_secret
 # }
 
-output "hello_world" {
-  value = "Hello, World!"
+output "vpc_id" {
+  value = data.aws_vpc.default.id
 }
