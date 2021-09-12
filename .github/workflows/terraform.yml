@@ -91,10 +91,12 @@ jobs:
       - name: Run Terraform Tests
         run: |
           cd test
-          go test -timeout 30m | tee test_output.log | true
+          go test -timeout 30m -v | tee test_output.log
 
       - name: Generate Terraform Test Report
+        if: always()
         run: |
+          ls -lah
           terratest_log_parser -testlog test_output.log -outputdir test_output
 
       - name: Publish Test Report
