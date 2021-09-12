@@ -53,10 +53,10 @@ on:
       - main
 
 jobs:
-  terraform:
-    name: "Terraform"
+  terraform-test:
+    name: "Terraform Testing"
     runs-on: ubuntu-latest
-    environment: production
+    environment: test
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -90,17 +90,58 @@ jobs:
           go test -timeout 30m | tee test_output.log
           terratest_log_parser -testlog test_output.log -outputdir test_output
 
-
-      - name: Publish Unit Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v1
+      - name: Upload Unit Test Results
         if: always()
+        uses: actions/upload-artifact@v2
         with:
-          files: test_output/report.xml
-
+          name: Unit Test Results
+          path: test_output/result.xml
 
       # Checks that all Terraform configuration files adhere to a canonical format
       - name: Terraform Format
         run: terraform fmt -check
+
+
+  publish-test-results:
+    name: "Publish Unit Tests Results"
+    needs: terraform-test
+    runs-on: windows-latest
+    # the build-and-test job might be skipped, we don't need to run this job then
+    if: success() || failure()
+
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          path: artifacts
+
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action/composite@v1
+        with:
+          files: artifacts/**/*.xml
+
+  terraform:
+    name: "Terraform Testing"
+    needs: terraform-test
+    runs-on: ubuntu-latest
+    environment: prod
+    if: success()
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
       # Generates an execution plan for Terraform
       - name: Terraform Plan
