@@ -21,3 +21,7 @@
 # output "secret_access_key" {
 #   value = aws_iam_access_key.admin.encrypted_secret
 # }
+
+output "hello_world" {
+  value = "Hello, World!"
+}

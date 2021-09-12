@@ -1,6 +1,5 @@
 provider "aws" {
   region                  = "us-west-2"
-  shared_credentials_file = var.shared_credentials_file
   profile                 = var.aws_profile
 }
 
