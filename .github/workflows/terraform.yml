@@ -80,6 +80,10 @@ jobs:
         run: |
           TF_WORKSPACE=test terraform init
 
+      # Checks that all Terraform configuration files adhere to a canonical format
+      - name: Terraform Format
+        run: terraform fmt -check
+
       - name: Prepare Terraform Test
         run: |
           curl -LsS https://raw.githubusercontent.com/gruntwork-io/gruntwork-installer/master/bootstrap-gruntwork-installer.sh | bash /dev/stdin --version v0.0.22
@@ -110,10 +114,6 @@ jobs:
         if: always()
         with:
           files: test_output/report.xml
-
-      # Checks that all Terraform configuration files adhere to a canonical format
-      - name: Terraform Format
-        run: terraform fmt -check
 
   terraform:
     name: "Terraform Apply"
