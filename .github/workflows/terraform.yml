@@ -53,10 +53,11 @@ on:
       - main
 
 jobs:
-  terraform:
-    name: "Terraform"
+  terraform-test:
+    name: "Terraform Testing"
     runs-on: ubuntu-latest
-    environment: production
+    environment: test
+    continue-on-error: true
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -76,11 +77,66 @@ jobs:
 
       # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
       - name: Terraform Init
-        run: terraform init
+        run: |
+          TF_WORKSPACE=test terraform init
 
       # Checks that all Terraform configuration files adhere to a canonical format
       - name: Terraform Format
         run: terraform fmt -check
+
+      - name: Prepare Terraform Test
+        run: |
+          curl -LsS https://raw.githubusercontent.com/gruntwork-io/gruntwork-installer/master/bootstrap-gruntwork-installer.sh | bash /dev/stdin --version v0.0.22
+          GITHUB_OAUTH_TOKEN=${{ secrets.ACCESS_TOKEN }} gruntwork-install --binary-name 'terratest_log_parser' --repo 'https://github.com/gruntwork-io/terratest' --tag 'v0.13.13'
+          sudo apt-get -y update
+          sudo apt-get -y install golang
+
+      - name: Run Terraform Tests
+        run: |
+          terraform workspace select test
+          cd test
+          go test -timeout 30m -v | tee test_output.log
+
+      - name: Generate Terraform Test Report
+        if: always()
+        run: |
+          ls -lah
+          terratest_log_parser -testlog test/test_output.log -outputdir test_output
+
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v2
+        if: always() # always run even if the previous step fails
+        with:
+          report_paths: 'test_output/report.xml'
+
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action/composite@v1
+        if: always()
+        with:
+          files: test_output/report.xml
+
+  terraform:
+    name: "Terraform Apply"
+    needs: terraform-test
+    runs-on: ubuntu-latest
+    environment: prod
+    if: success()
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
       # Generates an execution plan for Terraform
       - name: Terraform Plan

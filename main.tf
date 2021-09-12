@@ -1,19 +1,19 @@
 provider "aws" {
-  region                  = "us-west-2"
-  shared_credentials_file = var.shared_credentials_file
-  profile                 = var.aws_profile
+  region  = "us-west-2"
+  profile = var.aws_profile
 }
 
 terraform {
   backend "remote" {
     hostname     = "app.terraform.io"
     organization = "brick-house"
-
     workspaces {
-      name = "rearc-quest-infra"
+      prefix = "rearc-quest-infra-"
     }
   }
 }
+
+data "aws_region" "current" {}
 
 # data "aws_eks_cluster" "default" {
 #   name = "default"
