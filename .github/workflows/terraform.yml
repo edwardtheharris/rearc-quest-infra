@@ -90,10 +90,10 @@ jobs:
           GITHUB_OAUTH_TOKEN=${{ secrets.ACCESS_TOKEN }} gruntwork-install --binary-name 'terratest_log_parser' --repo 'https://github.com/gruntwork-io/terratest' --tag 'v0.13.13'
           sudo apt-get -y update
           sudo apt-get -y install golang
-          terraform workspace select test
 
       - name: Run Terraform Tests
         run: |
+          terraform workspace select test
           cd test
           go test -timeout 30m -v | tee test_output.log
 
