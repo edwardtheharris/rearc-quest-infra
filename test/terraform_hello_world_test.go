@@ -8,12 +8,9 @@ import (
 )
 
 func TestTerraformHelloWorldExample(t *testing.T) {
-	var varFiles []string = []string{"test.auto.tfvars"}
-
 	// retryable errors in terraform testing.
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../",
-		VarFiles:     varFiles,
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
