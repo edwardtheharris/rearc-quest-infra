@@ -22,15 +22,12 @@ func TestTerraformAwsNetworkExample(t *testing.T) {
 	// subnetBCidr := "172.32.32.0/20"
 	// subnetCCidr := "172.32.48.0/20"
 	// subnetDCidr := "172.32.64.0/20"
-	var varFiles []string = []string{"test.auto.tfvars"}
 
 	// Construct the terraform options with default retryable errors to handle the most common retryable errors in
 	// terraform testing.
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		// The path to where our Terraform code is located
 		TerraformDir: "../",
-
-		VarFiles: varFiles,
 
 		// Variables to pass to our Terraform code using -var options
 		// Vars: map[string]interface{}{
