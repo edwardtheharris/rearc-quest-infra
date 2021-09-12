@@ -43,3 +43,7 @@ output "subnet_d_id" {
 output "vpc_id" {
   value = data.aws_vpc.default.id
 }
+
+output "vpc_cidr" {
+  value = data.aws_vpc.default.cidr_block
+}
