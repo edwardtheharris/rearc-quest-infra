@@ -8,8 +8,8 @@ terraform {
   backend "remote" {
     hostname     = "app.terraform.io"
     organization = "brick-house"
-    workspaces = {
-      prefix = "rearc-quest-infra"
+    workspaces {
+      prefix = "rearc-quest-infra-"
     }
   }
 }

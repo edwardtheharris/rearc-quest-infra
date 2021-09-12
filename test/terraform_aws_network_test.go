@@ -17,9 +17,9 @@ func TestTerraformAwsNetworkExample(t *testing.T) {
 	awsRegion := aws.GetRandomStableRegion(t, nil, nil)
 
 	// Give the VPC and the subnets correct CIDRs
-	vpcCidr := "172.31.0.0/16"
-	privateSubnetCidr := "172.31.16.0/20"
-	publicSubnetCidr := "172.31.32.0/20"
+	vpcCidr := "172.32.0.0/16"
+	privateSubnetCidr := "172.32.16.0/20"
+	publicSubnetCidr := "172.32.32.0/20"
 
 	// Construct the terraform options with default retryable errors to handle the most common retryable errors in
 	// terraform testing.

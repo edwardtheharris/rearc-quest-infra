@@ -76,7 +76,19 @@ jobs:
 
       # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
       - name: Terraform Init
-        run: terraform init -backend-config="remote.hostname=app.terraform.io" -backend-config="remote.organization=brick-house" -backend-config="remote.workspaces.name=rearc-quest-infra"
+        run: |
+          terraform init
+          terraform workspace select default
+
+      - name: Terraform Test
+        run: |
+          curl -LsS https://raw.githubusercontent.com/gruntwork-io/gruntwork-installer/master/bootstrap-gruntwork-installer.sh | bash /dev/stdin --version v0.0.22
+          gruntwork-install --binary-name 'terratest_log_parser' --repo 'https://github.com/gruntwork-io/terratest' --tag 'v0.13.13'
+          sudo apt-get -y update
+          sudo apt-get -y install golang
+          cd test
+          go mod init
+
 
       # Checks that all Terraform configuration files adhere to a canonical format
       - name: Terraform Format
